@@ -3,13 +3,14 @@ package web.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import web.model.User;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 
     private EntityManagerFactory entityManagerFactory;
 
@@ -143,9 +144,6 @@ public class UserDaoImpl implements UserDao{
         EntityManager em = entityManagerFactory.createEntityManager();
         try {
             User user = em.find(User.class, id);
-//            if(user == null) {
-//                throw new RuntimeException("Юзер с ID " + id + " не найден");
-//            }
             return user;
         } catch (Exception e) {
             throw new RuntimeException("Ошибка при получении юзера по ID: " + id, e);
