@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+</head>
+<body>
+<h1>Пользователи</h1>
+<div th:if="${tableExists}">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Возраст</th>
+            <th>Изменить/Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.age}"></td>
+            <td>
+                <a th:href="@{/users/edit(id=${user.id})}">Изменить</a>
+                <form th:method="DELETE" th:action="@{/users/{id}(id=${user.id})}" style="display:inline;">
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:unless="${tableExists}">
+    <p>Таблица пользователей не существует.</p>
+    <form th:method="POST" th:action="@{/users/createTable}">
+        <button type="submit">Создать таблицу</button>
+    </form>
+</div>
+<br>
+<a th:href="@{/users/new}" th:if="${tableExists}">Создать нового пользователя</a>
+<br>
+<br>
+<form th:method="POST" th:action="@{/users/dropTable}" th:if="${tableExists}">
+    <button type="submit">Удалить таблицу</button>
+</form>
+<br>
+<form th:method="POST" th:action="@{/users/cleanTable}" th:if="${tableExists}">
+    <button type="submit">Очистить таблицу</button>
+</form>
+</body>
+</html>
